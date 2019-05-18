@@ -9,3 +9,11 @@ func Filter(vs []interface{}, f func(interface{}) bool) []interface{} {
 	}
 	return vsf
 }
+
+func Map(vs []interface{}, f func(interface{}, int) interface{}) []interface{} {
+	var vsf []interface{} = nil
+	for i, v := range vs {
+		vsf = append(vsf, f(v, i))
+	}
+	return vsf
+}
