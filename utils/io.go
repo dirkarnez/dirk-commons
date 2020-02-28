@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+// ReadFile read a file
 func ReadFile(path string, onFileRead func(*os.File) error) error {
 	file, err := os.Open(path)
 
@@ -19,22 +20,24 @@ func ReadFile(path string, onFileRead func(*os.File) error) error {
 	return onFileRead(file)
 }
 
-func ReadString(path string) (*string, error) {
+// ReadFileAsString read file as string
+func ReadFileAsString(path string) (string, error) {
 	buf := new(bytes.Buffer)
+
 	err := ReadFile(path, func(file *os.File) error {
 		_, err := buf.ReadFrom(file)
 		return err
 	})
 
 	if err != nil {
-		return nil, err
+		return "", err
+	} else {
+		return buf.String(), nil
 	}
-
-	content := buf.String()
-	return &content, nil
 }
 
-func ReadLines(path string, onEachLine func(string) error ) error {
+// ReadFileAsLines Read file as lines
+func ReadFileAsLines(path string, onEachLine func(string) error) error {
 	return ReadFile(path, func(file *os.File) error {
 		scanner := bufio.NewScanner(file)
 
@@ -49,7 +52,8 @@ func ReadLines(path string, onEachLine func(string) error ) error {
 	})
 }
 
-func CreateFile(path string, onFileCreate func(*os.File) error ) error {
+// CreateFile create file
+func CreateFile(path string, onFileCreate func(*os.File) error) error {
 	file, err := os.Create(path)
 	if err != nil {
 		return err
@@ -60,7 +64,8 @@ func CreateFile(path string, onFileCreate func(*os.File) error ) error {
 	return onFileCreate(file)
 }
 
-func WriteLines(path string, lines []string) error {
+// WriteLinesToFile write lines to File
+func WriteLinesToFile(path string, lines []string) error {
 	return CreateFile(path, func(file *os.File) error {
 		w := bufio.NewWriter(file)
 
