@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"io"
 	"os"
 )
 
@@ -74,5 +75,14 @@ func WriteLinesToFile(path string, lines []string) error {
 		}
 
 		return w.Flush()
+	})
+}
+
+// io.Reader includes io.ReadCloser
+// WriteIOReaderToFile create file
+func WriteIOReaderToFile(path string, reader io.Reader) error {
+	return CreateFile(path, func(file *os.File) error {
+		_, err = io.Copy(outFile, reader)
+		return err
 	})
 }
