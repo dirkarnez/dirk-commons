@@ -5,8 +5,10 @@ import (
 )
 
 func GetFileName(path string) string {
-	return path[strings.LastIndex(path, "/")+1:]
+	noExtension := strings.TrimSuffix(path, filepath.Ext(path))
+	return noExtension[strings.LastIndex(noExtension, "\\")+1:]
 }
+
 
 // fmt.Println(GetFolderName(`P`))           //P
 // fmt.Println(GetFolderName(`P:`))          //P
