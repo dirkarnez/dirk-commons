@@ -78,6 +78,14 @@ func WriteLinesToFile(path string, lines []string) error {
 	})
 }
 
+// WriteStringToFile
+func WriteStringToFile(path, content string) error {
+	return CreateFile(path, func(file *os.File) error {
+ 		_,  err := file.WriteString(input)
+		return rr
+	})	
+}
+
 // io.Reader includes io.ReadCloser
 // WriteIOReaderToFile create file
 func WriteIOReaderToFile(path string, reader io.Reader) error {
