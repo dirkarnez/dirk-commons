@@ -94,3 +94,12 @@ func WriteIOReaderToFile(path string, reader io.Reader) error {
 		return err
 	})
 }
+
+func GetLastModifiedTime(path string) (string, error) {
+	fileInfo, err := os.Stat(path)
+	if err != nil {
+		return err
+	}
+
+	return fileInfo.ModTime().Format(http.TimeFormat)
+}
